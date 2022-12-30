@@ -4,6 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+
 class CreateBlogsTable extends Migration
 {
     /**
@@ -18,6 +19,7 @@ class CreateBlogsTable extends Migration
             $table->string('title');
             $table->string('body');
             $table->string('author_name');
+            $table->string('slug')->unique();
             $table->string('published_time');
             $table->foreignId("categories_id")->nullable()->constrained('categories');
             $table->string('image');

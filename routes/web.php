@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\HTTP\Controllers\Admin\BlogController;
+use App\HTTP\Controllers\Admin\TestimonialController;
+use App\HTTP\Controllers\Admin\CategoryController;
+use App\HTTP\Controllers\Admin\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,8 +21,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+
+Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function () {
+
+    Route ::resource('blog',BlogController::class);
+    Route ::resource('testimonial',TestimonialController::class);
+    Route ::resource('category',CategoryController::class);
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+});
 
 require __DIR__.'/auth.php';
