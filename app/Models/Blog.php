@@ -9,6 +9,6 @@ class Blog extends Model
 {
     use HasFactory;
     public function category(){
-        return $this->belongsTo(Blog::class);
+        return $this->belongsTo(Category::class, 'categories_id');
     }
 }

@@ -1,0 +1,64 @@
+/* dashboard */
+.dashboard-card{
+    display:flex;
+    justify-content: space-evenly;
+    padding-bottom:30px;
+
+}
+
+/* blog create form */
+.create-back{
+    font-size:25px;
+    padding-left:5px;
+}
+
+.form-group{
+    padding-bottom:7px;
+}
+label{
+    font-size:18px;
+}
+.form-control{
+    font-size:18px;
+}
+.submit-btn{
+    font-size:20px;
+    padding:10px;
+}
+
+/* blog index file */
+    table{
+        font-size:18px;
+    }
+    thead{
+        font-weight: 700;
+    }
+    .add-post{
+        padding-bottom: 20px;
+        display:flex;
+        justify-content:end;
+    }
+    .top-bottom{
+        font-size:20px;
+    }
+    .index-table{
+        overflow-x: auto;
+    }
+    
+    .action-button{
+        font-size:16px;
+        display:flex;
+        justify-content: space-evenly;
+    }
+    .edit-btn{
+        padding:7px 30px;
+    }
+    .delete-btn{
+        padding:7px 20px;
+    }
+
+    /* media query */
+    @media(max-width: 991){
+
+        
+    }

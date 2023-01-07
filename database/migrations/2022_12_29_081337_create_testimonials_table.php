@@ -20,6 +20,7 @@ class CreateTestimonialsTable extends Migration
             $table->string('position');
             $table->string('image');
             $table->string('body');
+            $table->string('slug')->unique;
             $table->timestamps();
         });
     }
