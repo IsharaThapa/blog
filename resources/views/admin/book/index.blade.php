@@ -3,7 +3,7 @@
 <main>
     <div class="container-fluid">
         <div class="row">
-           <div class="col-6">
+            <div class="col-6">
                 <form action=" {{ route('admin.search') }}" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                     <div class="input-group">
                         <input type="text" name="search" id="search" class="form-control bg-light border-2 small"
@@ -14,8 +14,8 @@
            </div>
             <div class="col-6">
                 <div class="button add-post">
-                    <a href="/admin/blog/create"><button type="submit" class="btn btn-primary top-bottom">Add
-                            blog</button></a>
+                    <a href="/admin/book/create"><button type="submit" class="btn btn-primary top-bottom">Add
+                            book</button></a>
                 </div>
             </div>
         </div>
@@ -26,8 +26,8 @@
                     <thead>
                         <tr>
                             <td>Id</td>
-                            <td>Title</td>
-                            <td>Body</td>
+                            <td>Name</td>
+                            <td>Price</td>
                             <td>Category</td>
                             <td>Image</td>
                             <td>Author Name</td>
@@ -35,29 +35,25 @@
                         </tr>
                     </thead>
                     <tbody id="myTable">
-                        @foreach($blogs as $blog)
+                        @foreach($books as $book)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $blog->title }}</td>
-                            <td>{{ Str::limit($blog->body, 15, '...') }}</td>
-                            <td>{{ $blog->category->name }}</td>
-                            {{-- <td>@if ($blog->image)
-                                <img src="/images/{{$blog->image}}" height="50px" width="50px">
-                                @endif
-                            </td> --}}
+                            <td>{{ $book->name }}</td>
+                            <td>{{ $book->price }}</td>
+                            <td>{{ $book->category != null ? $book->category->name : '' }}</td>
                             <td>
-                                <img src="{{ $blog->getFirstMediaUrl() != null ? $blog->getFirstMediaUrl() : $blog->getFirstMediaUrl('image')   }}" alt="" width="100px">
+                                <img src="{{ $book->getFirstMediaUrl() != null ? $book->getFirstMediaUrl() : $book->getFirstMediaUrl('image')   }}" alt="" width="100px">
                             </td>
-                            <td>{{ $blog->author_name }}</td>
+                            <td>{{ $book->author_name }}</td>
                             <td>
                                 <div class="action">
                                     <div class="action-button">
                                         <div class="edit-button">
-                                            <a href="{{ route('admin.blog.edit',$blog->slug)}}"
+                                            <a href="{{ route('admin.book.edit',$book->slug)}}"
                                                 class="btn btn-secondary  edit-btn">Edit</a>
                                         </div>
                                         <div class="delete-button">
-                                            <form action="{{route('admin.blog.destroy', $blog->slug)}}" method="post">
+                                            <form action="{{route('admin.book.destroy', $book->slug)}}" method="post">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button class="btn btn-danger delete-btn" type="submit">Delete</a>

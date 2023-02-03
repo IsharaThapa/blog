@@ -16,20 +16,31 @@ class BlogController extends Controller
     
     public function index(Request $request){
         $blogs = Blog::with('category')->get();
-        if($request->query('search'))
-        {
-                $search = $request->input('search');
+
+        // if($request->input('search'))
+        // {
+        //     $search = $request->input('search');
+        //     $query = Blog::query();
+
+        //     if($request->ajax()){
+        //         $blogs = $query
+        //         // Search in the title and body columns from the posts table
+        //             ->where('title', 'LIKE', "%{$search}%")
+        //             ->orWhere('body', 'LIKE', "%{$search}%")
+        //             ->orWhere('author_name', 'LIKE', "%{$search}%")
+
+        //             ->get();return response()->json(['blogs'=>$blogs]);
+        //     }
+        //     else{
+        //         $blogs = $query->get();
+        //         // Return the search view with the resluts compacted
+        //         return view('admin.blog.index', compact('blogs'));
+
+        //     }
+        //     }
             
-                // Search in the title and body columns from the posts table
-                $blogs = Blog::query()
-                    ->where('title', 'LIKE', "%{$search}%")
-                    ->orWhere('body', 'LIKE', "%{$search}%")
-                    ->get();
-            
-                // Return the search view with the resluts compacted
-                return view('admin.blog.index', compact('blogs'));
-            } 
         
+        //             
         // $categories = Category::with('blog')->get();
         return view('admin.blog.index',compact('blogs'));
     }
@@ -45,18 +56,18 @@ class BlogController extends Controller
     public function store(Request $request){
         $blog = new Blog();
         
-        if($request->file('image')){
-            $file = $request->file('image');
-            // $filename = uniqid().str::random(10).'.'.$file->getClientOriginalExtention();
-            $filename = time().$file->getClientOriginalName();
-            $blog->image = $filename;
-            $file ->move(public_path('/images'),$filename);
-        }
-       
+        // if($request->file('image')){
+        //     $file = $request->file('image');
+        //     // $filename = uniqid().str::random(10).'.'.$file->getClientOriginalExtention();
+        //     $filename = time().$file->getClientOriginalName();
+        //     $blog->image = $filename;
+        //     $file ->move(public_path('/images'),$filename);
+        // }
         $blog->title = $request->title ;
         $blog->slug = str::slug($request->title).time();
         $blog->body = $request->body;
         $blog->categories_id = $request->categories_id;
+        $blog->addMediaFromRequest('image')->toMediaCollection();
         $blog->author_name = $request->author_name ;
         if($blog->save()){
              return redirect()->route('admin.blog.index')->with('success', 'Blog created successfully');

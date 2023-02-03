@@ -6,7 +6,7 @@
            <a href="/admin/category/create"> <button type="submit" class="btn btn-primary top-bottom">Add category</button></a>
        </div>
         <div class="index-table">
-            <table class="table ">
+            <table class="table " id="table">
                 <thead>
                    <tr>
                         <td>Id</td>

@@ -24,6 +24,7 @@
     <link rel="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template-->
     <link href="/css/admin/sb-admin-2.min.css" rel="stylesheet">
+    {{-- ajax --}}
     <!-- css -->
     <link href="/css/admin/style.css" rel="stylesheet">
     <script src="https://cdn.tiny.cloud/1/3r386sb0unded1r5pgu3xg57ty5al5yqxzcstu4c5rch93jy/tinymce/6/tinymce.min.js"
@@ -74,6 +75,15 @@
                 </a>
 
             </li>
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed nav-link-item" href="{{ route('admin.book.index') }}"
+                    data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="bi bi-book"></i>
+                    <span>Book</span>
+                </a>
+
+            </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
@@ -119,19 +129,8 @@
                     </button>
 
                     <!-- Topbar Search -->
-                    <form route=" {{ route('admin.blog.index') }}" 
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" name="search"  class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="submit">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
 
+                   
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
@@ -339,11 +338,40 @@
         <!-- End of Content Wrapper -->
     </div>
     <!-- end ofpage wrapper -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script>
         tinymce.init({
             selector: 'textarea#description'
         });
+        
     </script>
+    <script>
+        $(document).ready(function(){
+            $("#search").on('keyup',function(){
+                // e.preventDefault();
+                var value = $(this).val().toLowerCase(); 
+                // value = a
+                $.ajax({
+                    url : "{{ route('admin.search') }}",
+                    type : "GET",
+                    header : "{{ csrf_token() }}" ,
+                    data : {'search':value},
+                    // search : a
+                    success : function(data){                      
+                        $.each(data, function(){
+                            $("#myTable tr").filter(function() {
+                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                            });
+                        });
+                        
+                    }    
+                })
+            })  
+            
+        })
+    </script>
+
 
 </body>
 
